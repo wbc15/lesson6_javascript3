@@ -1,8 +1,8 @@
 
 /*    
     Program Name:  Photo Gallery Application
-    Author: 
-    Date:   
+    Author: William Clayton 
+    Date: november 19 2018  
     Filename: photos.js
     
  */
@@ -18,6 +18,29 @@ var figureCount = 3;
 /* This method adds src values to img elements based on order specified in photoOrder array             */
 /********************************************************************************************************/
 function populateFigures() {
+    var filename;
+    var currentFig;
+    
+    if (figureCount === 3) {
+        for (var i = 1; 1 < 4; i++) {
+            filename = "images/IMG_0" + photoOrder[i] + "sm.jpg";
+            currentFig = document.getElementsByTagName("img")[i - 1];
+            currentFig.src = filename;
+        
+        
+    
+        
+        }//end of for loop
+    } else {
+        for (var i = 0; i < 5; i++) {
+            filename = "images/IMG_0" + photoOrder[i] + "sm.jpg";
+            currentFig = document.getElementsByTagName("img")[i];
+            currentFig.src = filename;
+            
+        }//end of for loop
+    
+    }// end of else
+    
 
 
 
@@ -69,10 +92,52 @@ function leftArrow() {
 /*           This method is executed to allow the photo gallery to shift to five image layout.         */
 /******************************************************************************************************/
 function previewFive() {
-   
+    
+    //locate first element where the tag is article assign to a variable
+    var articleEl = document.getElementsByTagName("article")[0];
+    
+    
+    //create figure and img elements for fifth image
+    var lastFigure = document.createElement("figure");
+    
+    lastFigure.id = "fig5";
+    lastFigure.style.zIndex = "5";
+    lastFigure.style.position = "absolute";
+    lastFigure.style.right = "45px";
+    lastFigure.style.top = "67px";
+    
+    var lastImage = document.createElement("img");
+    lastImage.width = "240";
+    lastImage.height = "135";
+    
+    //add or attach the fifth image to preview
+    lastFigure.appendChild(lastImage);
+    
+    articleEl.appendChild(lastFigure);
+    
+    //clone figure element for fifth image and edit to be first image
+    var firstFigure = lastFigure.cloneNode(true);
+    
+    firstFigure.id = "fig1";
+    firstFigure.style.right = " ";
+    firstFigure.style.left = "45px";
+    
+    articleEl.insertBefore(firstFigure, document.getElementById("fig2"));
+    
+    //add appro source values to two new image elements
+    document.getElementsByTagName("img")[0].src = "images/IMG_0" + photoOrder[0] + "sm.jpg";
+    document.getElementsByTagName("img")[4].src = "images/IMG_0" + photoOrder[4] + "sm.jpg";
+    
+    figureCount = 5;
+    //disable the show more images button after it has been selected once
+    var numberButton = document.querySelector("#fiveButton p");
+    numberButton.removeEventListener("click", previewFive, false);
+    
+    
+    
 
-   
-   
+    
+    
 }//end of previewFive()
 
 /****************************************END of previewFive() Function**********************************/
@@ -83,6 +148,29 @@ function previewFive() {
 /*         This method attaches event listeners to the buttons (left, right, and show all).            */
 /*******************************************************************************************************/
 function createEventListeners() {
+    //declare variable for document element with id of left arrow, which is in the HTML document
+    var leftarrow = document.get.ElementById("leftarrow");
+    
+    //add  and event handler to the specified document element (leftarrow)
+    //the leftarrow() function will be executed when the user clicks the left navigation arrow button
+    
+    leftarrow.addEventListener("click", leftArrow, false);
+    
+    //declare variable for document event element with id of rightarrow in the html document
+    var rightarrow = document.getElementById("rightarrow");
+    
+    //add an event handler to the specified document element rightarrow
+    //the rightarrow() element will be excecuted when the user clicks on the right navigation arrow
+    rightarrow.addEventListener("click", rightArrow, false);
+    
+    //declare variable for the element fiveButton
+    var showAllButton = document.querySelector("#fiveButton p");
+    
+    //add event listener to showAllButton element
+    //when the user clicks the Show More button the previewFive function is executed
+    showAllButton.addEventListener("click", previewFive, false);
+    
+
    
 
 
